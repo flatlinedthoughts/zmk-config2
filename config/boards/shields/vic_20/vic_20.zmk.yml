@@ -1,0 +1,10 @@
+file_format: "1"
+id: vic_20
+name: VIC-20 Keyboard
+type: shield
+outputs:
+  - usb
+url: https://github.com/kjeller/vic-20_shield
+requires: [rpi_pico]
+features:
+  - keys
