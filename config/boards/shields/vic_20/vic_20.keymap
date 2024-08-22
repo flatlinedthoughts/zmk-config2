@@ -1,19 +1,97 @@
+/*
+ * Copyright (c) 2022 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 
+//Layer definitions
+#define QWERTY   0
+#define NUMBER   1
+#define UTILITY  2
+
+//Keys
+#define ____     &trans
+#define xxxx     &none
+#define MUTE     &kp C_MUTE
+#define VOL_DN   &kp C_VOL_DN  
+#define VOL_UP   &kp C_VOL_UP
+
+//Layer Switching Keys
+#define N_SPA    &lt NUMBER SPACE
+#define S_N_S    &lt LS(NUMBER) SPACE
+
+#define NAV_LEFT  &rpi HOME   LEFT    // tap: left  | wait then hold key: beginning of line
+#define NAV_RIGHT &rpi END    RIGHT   // tap: right | wait then hold key: end       of line
+#define NAV_UP    &rpi PG_UP  UP      // tap: up    | wait then hold key: page up
+#define NAV_DOWN  &rpi PG_DN  DOWN    // tap: down  | wait then hold key: page down
+#define SftCp     &rpi LSHIFT CAPS    // tap: shift | wait then hold key: caps lock
+
+//////////////////////////////////////////////////////////////////////////////////////////////
 / {
+    combos {
+        compatible = "zmk,combos";
+        combo_Utility {
+            timeout-ms = <50>;
+            key-positions = <37 38>;
+            bindings = <&mo UTILITY>;
+        };
+    };
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+    behaviors {
+
+        bs_del: backspace_delete {        // tap: backspace // lshft + tap: delete 
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp BACKSPACE>, <&kp DELETE>;
+            mods = <MOD_LSFT>;
+        };
+
+        rpi: require_prior_idle {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <200>;             // double press in this window for tap behavior faster
+            require-prior-idle-ms = <125>;    // need this much time between presses to activate hold else tap
+            bindings = <&kp>, <&kp>;
+        };
+    };
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
     keymap {
         compatible = "zmk,keymap";
 
-        
-        default_layer {
+        qwerty {
             bindings = <
-    &kp ESC    &kp N1   &kp N2 &kp N3 &kp N4 &kp N5 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0     &kp PLUS  &kp MINUS &kp HOME   &kp DEL       &kp F1
-    &kp TAB    &kp Q    &kp W  &kp E  &kp R  &kp T  &kp Y  &kp U  &kp I  &kp O  &kp P      &kp AT    &kp STAR  &kp PIPE   &kp BACKSPACE &kp F3
-    &kp CAPS   &kp A    &kp S  &kp D  &kp F  &kp G  &kp H  &kp J  &kp K  &kp L &kp COLON   &kp SEMI  &kp EQUAL &kp RETURN               &kp F5
-    &kp LCTRL  &kp LALT &kp Z  &kp X  &kp C  &kp V  &kp B  &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH  &kp RSHFT &kp UP     &kp DOWN      &kp F7
-                                                                &kp SPACE
+                &kp ESC   &kp Q     &kp W     &kp E     &kp R     &kp T     &kp Y     &kp U     &kp I     &kp O     &kp P     &bs_del
+                &kp TAB   &kp A     &kp S     &kp D     &kp F     &kp G     &kp H     &kp J     &kp K     &kp L               &kp ENTER
+                SftCp               &kp Z     &kp X     &kp C     &kp V     &kp B     &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH    
+                &kp LCTRL    &kp LGUI         &kp LALT  N_SPA                         S_N_S     NAV_LEFT  NAV_DOWN  NAV_UP    NAV_RIGHT
             >;
-        };  
+        };
+
+        number {
+            bindings = <
+                ____    &kp GRAVE xxxx    xxxx    xxxx    xxxx    &kp LBKT &kp RBKT &kp MINUS &kp EQUAL &kp N0   ____
+                ____    &kp N1    &kp N2  &kp N3  &kp N4  &kp N5  &kp N6   &kp N7   &kp N8    &kp N9             ____
+                ____              xxxx    xxxx    xxxx    xxxx    xxxx     xxxx     xxxx      &kp SEMI  &kp SQT  &kp BSLH    
+                ____       ____           ____    ____                     ____     ____      ____      ____     ____       
+            >;
+        };
+
+        utility {
+            bindings = <
+                &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   &kp F6   &kp F7   &kp F8   &kp F9   &kp F10  &kp F11  &kp F12
+                ____     xxxx     xxxx     xxxx     xxxx     xxxx     xxxx     xxxx     &bootloader       xxxx     ____
+                ____              xxxx     xxxx     xxxx     xxxx     xxxx     xxxx     xxxx     xxxx     xxxx     xxxx   
+                ____        ____           ____     ____                       ____     MUTE     VOL_DN   VOL_UP   xxxx    
+            >;
+        };
     };
 };
