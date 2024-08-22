@@ -1,6 +1,6 @@
 if SHIELD_VIC_20
 
 config ZMK_KEYBOARD_NAME
-    default "VIC-20 Keyboard"
+    default "Spaghetti" //to match my pile of spaghetti that is my handwired board
 
 endif
