@@ -20,8 +20,9 @@
 #define VOL_UP   &kp C_VOL_UP
 
 //Layer Switching Keys
-#define N_SPA    &lt NUMBER SPACE
-#define S_N_S    &lm NUMBER LSHIFT
+#define N_SPA        &lt NUMBER SPACE
+#define NUM_SHIFT    &lm NUMBER LSHIFT
+#define S_N_S        &lt NUM_SHIFT SPACE
 
 #define NAV_LEFT  &rpi HOME   LEFT    // tap: left  | wait then hold key: beginning of line
 #define NAV_RIGHT &rpi END    RIGHT   // tap: right | wait then hold key: end       of line
