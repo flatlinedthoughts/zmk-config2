@@ -21,7 +21,7 @@
 
 //Layer Switching Keys
 #define N_SPA        &lt NUMBER SPACE
-#define NUM_SHIFT    &lm NUMBER LSHIFT
+#define NUM_SHIFT    &lm NUMBER &kp LSHIFT
 #define S_N_S        &mt NUM_SHIFT SPACE
 
 #define NAV_LEFT  &rpi HOME   LEFT    // tap: left  | wait then hold key: beginning of line
