@@ -22,7 +22,6 @@
 //Layer Switching Keys
 #define N_SPA        &lt NUMBER SPACE
 #define NUM_SHIFT    &Shifted_Number
-//#define S_N_S        &mt NUM_SHIFT SPACE
 
 #define NAV_LEFT  &rpi HOME   LEFT    // tap: left  | wait then hold key: beginning of line
 #define NAV_RIGHT &rpi END    RIGHT   // tap: right | wait then hold key: end       of line
@@ -73,15 +72,6 @@
             ;
         };
 
-        S_N_S: Shifted_Number_Space {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <0>;
-            tapping_term_ms = <200>;
-            flavor = "tap-preferred";
-            bindings = <&Shifted_Number>, <&kp SPACE>
-            ;
-        };
-
     };
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -94,7 +84,7 @@
                 &kp ESC   &kp Q     &kp W     &kp E     &kp R     &kp T     &kp Y     &kp U     &kp I     &kp O     &kp P     &bs_del
                 &kp TAB   &kp A     &kp S     &kp D     &kp F     &kp G     &kp H     &kp J     &kp K     &kp L               &kp ENTER
                 SftCp               &kp Z     &kp X     &kp C     &kp V     &kp B     &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH    
-                &kp LCTRL    &kp LGUI         &kp LALT  S_N_S                         N_SPA     NAV_LEFT  NAV_DOWN  NAV_UP    NAV_RIGHT
+                &kp LCTRL    &kp LGUI         &kp LALT  NUM_SHIFT                         N_SPA     NAV_LEFT  NAV_DOWN  NAV_UP    NAV_RIGHT
             >;
         };
 
