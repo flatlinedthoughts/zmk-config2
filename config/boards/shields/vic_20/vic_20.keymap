@@ -21,8 +21,8 @@
 
 //Layer Switching Keys
 #define N_SPA        &lt NUMBER SPACE
-#define NUM_SHIFT    &SNum
-//#define S_N_S        &mt NUM_SHIFT SPACE
+#define NUM_SHIFT    &Shifted_Number
+#define S_N_S        &mt NUM_SHIFT SPACE
 
 #define NAV_LEFT  &rpi HOME   LEFT    // tap: left  | wait then hold key: beginning of line
 #define NAV_RIGHT &rpi END    RIGHT   // tap: right | wait then hold key: end       of line
@@ -63,17 +63,13 @@
         };
 
         // Temporarily switches to a layer (`&mo`) while a modifier is held.
-        //`&SNum NUM_LAYER LSHIFT`
-
-        SNum: Shifted_Num_Layer {
-            compatible = "zmk,behavior-macro";   
-            #binding-cells = <0>;
+        ZMK_MACRO(Shifted_Number,
             bindings
             = <&macro_press &mo NUMBER &kp LSHFT>
             , <&macro_pause_for_release>
             , <&macro_release &mo NUMBER &kp LSHFT>
             ;
-        };
+        );
     };
 
 //////////////////////////////////////////////////////////////////////////////////////////////
