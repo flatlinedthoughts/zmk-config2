@@ -75,7 +75,7 @@
 
         S_N_S: Shifted_Number_Space {
             compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
+            #binding-cells = <0>;
             tapping_term_ms = <200>;
             flavor = "tap-preferred";
             bindings = <&Shifted_Number>, <&kp SPACE>
