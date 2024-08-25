@@ -10,7 +10,8 @@
 //Layer definitions
 #define QWERTY   0
 #define NUMBER   1
-#define UTILITY  2
+#define SHIFTNUM 2
+#define UTILITY  3
 
 //Keys
 #define ____     &trans
@@ -21,7 +22,7 @@
 
 //Layer Switching Keys
 #define N_SPA        &lt NUMBER SPACE
-#define NUM_SHIFT    &mt &SN SPACE
+#define NUM_SHIFT    &lt SHIFTNUM SPACE
 
 #define NAV_LEFT  &rpi HOME   LEFT    // tap: left  | wait then hold key: beginning of line
 #define NAV_RIGHT &rpi END    RIGHT   // tap: right | wait then hold key: end       of line
@@ -31,26 +32,23 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 / {
-    combos {
-        compatible = "zmk,combos";
-        combo_Utility {
-            timeout-ms = <100>;
-            key-positions = <37 38>;
-            bindings = <&mo UTILITY>;
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer {
+            if-layers = <1 2>;
+            then-layer = <3>;
         };
     };
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
     behaviors {
-
         bs_del: backspace_delete {        // tap: backspace // lshft + tap: delete 
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp BACKSPACE>, <&kp DELETE>;
             mods = <MOD_LSFT>;
         };
-
         rpi: require_prior_idle {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -60,20 +58,6 @@
             require-prior-idle-ms = <125>;    // need this much time between presses to activate hold else tap
             bindings = <&kp>, <&kp>;
         };
-
-        // Temporarily switches to a layer (`&mo`) while a modifier is held.
-        SN: Shifted_Number {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &mo NUMBER>
-                , <&macro_press &kp LSHIFT>
-                , <&macro_pause_for_release>
-                , <&macro_release &kp LSHIFT>
-                , <&macro_release &mo QWERTY>
-            ;
-        };
-
     };
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,6 +80,15 @@
                 ____    &kp N1    &kp N2  &kp N3  &kp N4  &kp N5  &kp N6   &kp N7   &kp N8    &kp N9             ____
                 ____              xxxx    xxxx    xxxx    xxxx    xxxx     xxxx     xxxx      &kp SEMI  &kp SQT  &kp BSLH    
                 ____       ____           ____    ____                     ____     ____      ____      ____     ____       
+            >;
+        };
+
+        shiftnum {
+            bindings = <
+                ____    &kp LS(GRAVE) xxxx        xxxx        xxxx        xxxx        &kp LS(LBKT) &kp LS(RBKT) &kp LS(MINUS) &kp LS(EQUAL) &kp LS(N0)   ____
+                ____    &kp LS(N1)    &kp LS(N2)  &kp LS(N3)  &kp LS(N4)  &kp LS(N5)  &kp LS(N6)   &kp LS(N7)   &kp LS(N8)    &kp LS(N9)                 ____
+                ____                  xxxx        xxxx        xxxx        xxxx        xxxx         xxxx         xxxx          &kp LS(SEMI)  &kp LS(SQT)  &kp LS(BSLH)    
+                ____       ____                   ____        ____                                 ____         ____          ____          ____         ____       
             >;
         };
 
