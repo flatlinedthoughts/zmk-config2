@@ -6,18 +6,16 @@
 
 #include <dt-bindings/zmk/keys.h>
 
-//Layer definitions
 #define macro   0
 
+/{
     keymap {
         compatible = "zmk,keymap";
-
         macro {
             bindings = <
                 &kp 1   &kp Q     &kp W
                 &kp 2   &kp A     &kp S     
             >;
         };
-
-
     };
+};
