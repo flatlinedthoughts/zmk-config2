@@ -1,5 +1,22 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+
+/ {
+    combos {
+        compatible = "zmk,combos";
+        combo_BT_clr {
+            timeout-ms = <50>;
+            key-positions = <4 5 6>;
+            bindings = <&bt BT_CLR>;
+        };
+        combo_BT_set {
+            timeout-ms = <50>;
+            key-positions = <4 5 8>;
+            bindings = <&bt BT_SEL 0>;
+        };
+    };
+};
 
 / {
     keymap {
@@ -7,13 +24,13 @@
 
         default_layer { // Layer 0
             // -------------------------------------
-            // |     Z     |     M     |     K     |
-            // |     A     |     B     |     C     |
-            // |     D     |     E     |     F     |
+            // |     0     |     1     |     x     |
+            // |     x     |     4     |     5     |
+            // |     6     |     x     |     8     |
             bindings = <
-                &kp F13    &kp F14    &kp F19
-                &kp F20    &kp F15    &kp F16
-                &kp F17    &kp F21    &kp F18
+                &kp F13    &kp F14    &none
+                &none      &kp F15    &kp F16
+                &kp F17    &none      &kp F18
             >;
         };
     };
